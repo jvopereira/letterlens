@@ -1,31 +1,31 @@
 # Node.js
-node_modules/
+node_modules
 
 # Logs
-**/logs/
+**/logs
 **/*.log
 
 # Dependency directories
-.venv/
+.venv
 poetry.lock
 
 # Build directories
-dist/
-build/
-dist/
+dist
+build
+dist
 
 # Cache files and directories
-.vite/
-**/.next/
-**/.cache/
+.vite
+**/.next
+**/.cache
 **/*.cache
 **/*.tmp
 
 # Environment variables
-**/.env
+.env
 
 # Python
-__pycache__/
+__pycache__
 *.py[cod]
 
 # Jupyter Notebooks
@@ -35,8 +35,8 @@ __pycache__/
 .DS_Store
 
 # IDEs and Editors
-.vscode/
-.idea/
+.vscode
+.idea
 *.iml
 
 # Temporary files and directories

@@ -1,11 +1,22 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from src.api.routes import movies
+from src.middlewares.auth import verify_token
 
 app = FastAPI()
 
-@app.get("/random-movies")
-def get_random_movies():
-    return [
-        {"title": "Inception", "year": 2010},
-        {"title": "The Matrix", "year": 1999},
-        {"title": "Interstellar", "year": 2014}
-    ]
+app.include_router(movies.router)
+
+@app.middleware("http")
+async def auth_middleware(request, call_next):
+    if request.url.path in ["/backend/live"]:
+        return await call_next(request)
+    
+    authorization: str = request.headers.get("Authorization")
+    if authorization:
+        auth_token = authorization.split(" ")[1]
+        await verify_token(auth_token)
+    else:
+        raise HTTPException(status_code=401, detail="Authorization header missing")
+    
+    response = await call_next(request)
+    return response
