@@ -13,12 +13,12 @@ security = HTTPBearer()
 
 def create_access_token(data: dict):
     to_encode = data.copy()
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
 async def verify_token(auth_token):
     try:
-        payload = jwt.decode(auth_token, SECRET_KEY, algorithms=ALGORITHM)
+        payload = jwt.decode(auth_token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except jwt.PyJWTError:
         raise HTTPException(
@@ -26,4 +26,3 @@ async def verify_token(auth_token):
             detail="Invalid token",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    
